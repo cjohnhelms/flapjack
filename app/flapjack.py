@@ -1,14 +1,11 @@
 #!/usr/bin/env/pythn
-import random
+
+from player import Player, Dealer
+from deck import Deck
 import time
 import sys
 from os import system, name
 
-HEARTS = chr(9829)
-DIAMONDS = chr(9830)
-SPADES = chr(9824)
-CLUBS = chr(9827)
-BACKSIDE = 'backside'
 TITLE = """
                                                                                                     
                           ████▓▓████████▓▓████▒▒████████▓▓▓▓▓▓██▓▓██                                  

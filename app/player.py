@@ -8,27 +8,6 @@ class Person():
     def deal(self, deck):
         self.hand.append(deck.draw())
 
-    def takeBet(self):
-        while True:
-            try:
-                print(f'Flapjacks: {self.flapjacks}')
-                bet = int(input("Bet: "))
-                if bet <= self.flapjacks:
-                    self.current_bet = bet
-                    break
-                else:
-                    print('Not enough flapjacks!')
-            except ValueError:
-                print('Please enter a number')
-
-    def takeMove(self):
-        while True:
-            choice = input("(H)it or (S)tay? ")
-            if choice.lower() not in ['h', 's']:
-                print('Please select hit or stay.')
-            else:
-                return choice
-
     def getValue(self):
         aces = 0
         self.value = 0
@@ -93,6 +72,7 @@ class Player(Person):
             if choice.lower() not in ['h', 's']:
                 print('Please select hit or stay.')
             else:
+                return choice
 
 class Dealer(Person):
     def displayHand(self):
