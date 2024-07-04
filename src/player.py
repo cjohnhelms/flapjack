@@ -5,7 +5,7 @@ BACKSIDE = 'backside'
 
 class Person():
     def __init__(self):
-        self.hand: list(tuple) = []
+        self.hand: list[tuple] = []
         self.value: int = 0
         self.flapjacks: int = 500
         self.current_bet: int = 0
