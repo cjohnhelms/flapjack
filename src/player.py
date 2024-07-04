@@ -6,7 +6,6 @@ BACKSIDE = 'backside'
 class Person():
     def __init__(self):
         self.hand: list[tuple] = []
-        self.value: int = 0
         self.flapjacks: int = 500
         self.current_bet: int = 0
         self.hidden: bool = False
@@ -14,23 +13,25 @@ class Person():
     def deal(self, deck):
         self.hand.append(deck.draw())
 
-    def get_value(self):
+    @property
+    def value(self) -> int:
         aces: int = 0
-        self.value = 0
+        res = 0
         for card in self.hand:
             rank = card[0]
             if rank in ('J', 'Q', 'K'):
-                self.value += 10
+                res += 10
             elif rank == 'A':
                 aces += 1
             else:
-                self.value += int(rank)
-        if self.value > 10:
-            self.value += aces
+                res += int(rank)
+        if res > 10:
+            res += aces
         else:
-            self.value += aces * 10
+            res += aces * 10
+        return res
 
-    def display_cards(self, cards: list[tuple]):
+    def display_cards(self, cards):
         rows: list[str] = ['', '', '', '', '', '', '', '', '']
 
         for i, card in enumerate(cards):
@@ -71,10 +72,8 @@ class Player(Person):
 
     def take_move(self, deck: Deck):
         while True:
-            if len(self.hand) == 2 and self.hand[0][0] == self.hand[1][0]:
-                choice: str = input("(H)it, (S)tay, (D)ouble down, or S(p)lit? ")
-            elif len(self.hand) == 2:
-                choice: str =  input("(H)it, (S)tay, or (D)ouble down? ")
+            if len(self.hand) == 2:
+                choice: str = input("(H)it, (S)tay, or (D)ouble down? ")
             else:
                 choice: str = input("(H)it or (S)tay? ")
             if choice.lower() not in ['h', 's', 'd', 'p']:
@@ -89,8 +88,7 @@ class Player(Person):
                         self.hidden = False
                         return choice
                     case 'd':
-                        self.get_value()
-                        if (self.value - self.current_bet) >= self.current_bet:
+                        if (self.value - self.current_bet) <= self.current_bet:
                             self.deal(deck)
                             self.hidden = True
                             return choice
@@ -106,4 +104,4 @@ class Dealer(Person):
         print('Dealer hits...')
         time.sleep(1)
         self.deal(deck)
-        self.get_value()
+        self.value
