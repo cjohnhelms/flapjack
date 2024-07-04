@@ -95,7 +95,7 @@ class Game:
         print(f'Flapjacks: {player.flapjacks}')
         print(f'Current bet: {player.current_bet}')
         if player_hidden:
-            player.display_cards([ BACKSIDE ] + player.hand[1:])
+            player.display_cards([ BACKSIDE ] + player.hand[:-1])
         else:
             player.display_cards(player.hand)
 
@@ -129,8 +129,14 @@ class Game:
                     break
                 case 'd':
                     self.draw_screen(player, dealer, deck, player.hidden, True)
+                    break
 
-    def score(self, player: Player, dealer: Dealer, deck: Deck):
+    def calculate_scores(self, player: Player, dealer: Dealer, deck: Deck):
+        if player.value <= 21:
+            while dealer.value < 17:
+                dealer.hit(deck)
+                self.draw_screen(player, dealer, deck, player.hidden, True)
+        input("Press any key to continue...")
         time.sleep(1)
         self.draw_screen(player, dealer, deck, False, False)
         print(divider)
@@ -164,7 +170,7 @@ class Game:
             self.init_hand(player, dealer, deck)
             self.check_flapjacks(player)
             self.moves(player, dealer, deck)
-            self.score(player, dealer, deck)
+            self.calculate_scores(player, dealer, deck)
             self.play_again()
 
 if __name__ == '__main__':

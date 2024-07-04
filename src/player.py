@@ -16,7 +16,7 @@ class Person():
     @property
     def value(self) -> int:
         aces: int = 0
-        res = 0
+        res: int = 0
         for card in self.hand:
             rank = card[0]
             if rank in ('J', 'Q', 'K'):
@@ -25,10 +25,11 @@ class Person():
                 aces += 1
             else:
                 res += int(rank)
-        if res > 10:
-            res += aces
-        else:
-            res += aces * 10
+        for ace in range(aces):
+            if res > 10:
+                res += 1
+            else:
+                res += 11
         return res
 
     def display_cards(self, cards):
