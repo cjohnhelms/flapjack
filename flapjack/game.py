@@ -63,24 +63,22 @@ TITLE: str = """
 """
 
 
-def bye():
-    clear()
-    print("Thanks for playing!")
-    time.sleep(1)
-    clear()
-    sys.exit()
-
-
-def clear():
-    if name == "nt":
-        _ = system("cls")
-    else:
-        _ = system("clear")
-
-
 class Game:
+    def clear(self):
+        if name == "nt":
+            _ = system("cls")
+        else:
+            _ = system("clear")
+
+    def bye(self):
+        self.clear()
+        print("Thanks for playing!")
+        time.sleep(1)
+        self.clear()
+        sys.exit()
+
     def __init__(self):
-        clear()
+        self.clear()
         print(TITLE)
         print(divider)
         print(
@@ -96,7 +94,7 @@ class Game:
         player_hidden: bool,
         dealer_hidden: bool,
     ):
-        clear()
+        self.clear()
         if dealer_hidden:
             dealer.display_cards([BACKSIDE] + dealer.hand[1:])
         else:
@@ -172,10 +170,10 @@ class Game:
                 print("Please select yes or no.")
             else:
                 if cont == "y":
-                    clear()
+                    self.clear()
                     break
                 else:
-                    bye()
+                    self.bye()
 
     def play(self, player, dealer, deck):
         while True:
@@ -184,15 +182,3 @@ class Game:
             self.moves(player, dealer, deck)
             self.calculate_scores(player, dealer, deck)
             self.play_again()
-
-
-if __name__ == "__main__":
-    try:
-        game = Game()
-        deck = Deck()
-        deck.shuffle()
-        player = Player()
-        dealer = Dealer()
-        game.play(player, dealer, deck)
-    except KeyboardInterrupt:
-        bye()
