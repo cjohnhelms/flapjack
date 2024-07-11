@@ -1,5 +1,5 @@
-from deck import Deck
 import time
+from deck import Deck
 
 BACKSIDE = "backside"
 
@@ -32,31 +32,6 @@ class Person:
             else:
                 res += 11
         return res
-
-    def display_cards(self, cards):
-        rows: list[str] = ["", "", "", "", "", "", "", "", ""]
-
-        for i, card in enumerate(cards):
-            rows[0] += " _______  "
-            if card == BACKSIDE:
-                rows[1] += "|##     | "
-                rows[2] += "|       | "
-                rows[3] += "|       | "
-                rows[4] += "|  ###  | "
-                rows[5] += "|       | "
-                rows[6] += "|       | "
-                rows[7] += "|_____##| "
-            else:
-                rank, suit = card
-                rows[1] += "|{}     | ".format(rank.ljust(2))
-                rows[2] += "|       | "
-                rows[3] += "|       | "
-                rows[4] += "|   {}   | ".format(suit)
-                rows[5] += "|       | "
-                rows[6] += "|       | "
-                rows[7] += "|_____{}| ".format(rank.rjust(2, "_"))
-        for row in rows:
-            print(row)
 
 
 class Player(Person):
